@@ -45,6 +45,22 @@ pipeline {
                 }
             }
         }
+        stage('Push Image on ECR') {
+            steps {
+                echo 'Pushing..'
+                withCredentials([aws(
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+                    credentialsId: 'aws-credentials', 
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) 
+                    {
+                     sh '''
+                        aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 891377281461.dkr.ecr.ca-central-1.amazonaws.com
+                        docker tag ${IMAGE_NAME}:${IMAGE_TAG} 891377281461.dkr.ecr.ca-central-1.amazonaws.com/${IMAGE_NAME}:${IMAGE_TAG}
+                        docker push 891377281461.dkr.ecr.ca-central-1.amazonaws.com/${IMAGE_NAME}:${IMAGE_TAG}
+                     '''
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
