@@ -4,6 +4,8 @@ pipeline {
     parameters {
         string(name: 'IMAGE_NAME', defaultValue: 'app', description: 'The name of my docker image')
         string(name: 'IMAGE_TAG', defaultValue: 'latest', description: 'The tag of my docker image')
+        string(name: 'CONTAINER_NAME', defaultValue: 'app-container', description: 'The name of my docker image')
+        string(name: 'DOCKER_HUB_ID', defaultValue: 'franklinfoko', description: 'The docker hub username')
     }
 
     stages {
