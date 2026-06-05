@@ -9,11 +9,11 @@ terraform {
 
 provider "aws" {
   # Configuration options
+  region = "ca-central-1"
 }
 
 
 resource "aws_instance" "example" {
-  region        = "ca-central-1"
   ami           = "ami-06445ac85e0d277a9"
   instance_type = "t3.medium"
 
