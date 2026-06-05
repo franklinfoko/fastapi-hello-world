@@ -6,6 +6,7 @@ pipeline {
         string(name: 'IMAGE_TAG', defaultValue: 'latest', description: 'The tag of my docker image')
         string(name: 'CONTAINER_NAME', defaultValue: 'app-container', description: 'The name of my docker image')
         string(name: 'DOCKER_HUB_ID', defaultValue: 'franklinfoko', description: 'The docker hub username')
+        string(name: 'ECR_REPO_NAME', defaultValue: 'demoecr', description: 'The docker hub username')
     }
 
     stages {
@@ -68,8 +69,8 @@ pipeline {
                     {
                      sh '''
                         aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 891377281461.dkr.ecr.ca-central-1.amazonaws.com
-                        docker tag ${IMAGE_NAME}:${IMAGE_TAG} 891377281461.dkr.ecr.ca-central-1.amazonaws.com/${IMAGE_NAME}:${IMAGE_TAG}
-                        docker push 891377281461.dkr.ecr.ca-central-1.amazonaws.com/${IMAGE_NAME}:${IMAGE_TAG}
+                        docker tag ${IMAGE_NAME}:${IMAGE_TAG} 891377281461.dkr.ecr.ca-central-1.amazonaws.com/${ECR_REPO_NAME}:${IMAGE_TAG}
+                        docker push 891377281461.dkr.ecr.ca-central-1.amazonaws.com/${ECR_REPO_NAME}:${IMAGE_TAG}
                      '''
                 }
             }
