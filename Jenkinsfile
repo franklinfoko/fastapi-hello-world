@@ -97,15 +97,25 @@ pipeline {
                 sshagent(credentials: ['ssh-key'], ignoreMissing: true) {
                   sh '''
                         command1="docker pull ${DOCKER_HUB_ID}/${IMAGE_NAME}:${IMAGE_TAG}"
-                        command2="docker run -d -p 80:8000 --name ${CONTAINER_NAME} ${DOCKER_HUB_ID}/${IMAGE_NAME}:${IMAGE_TAG}"
+                        command2="docker rm -f ${CONTAINER_NAME}"
+                        command3="docker run -d -p 80:8000 --name ${CONTAINER_NAME} ${DOCKER_HUB_ID}/${IMAGE_NAME}:${IMAGE_TAG}"
                         ssh -o StrictHostKeyChecking=no ubuntu@${HOSTNAME} \
                             -o SendEnv=DOCKER_HUB_ID \
                             -o SendEnv=IMAGE_NAME \
                             -o SendEnv=IMAGE_TAG \
                             -o SendEnv=CONTAINER_NAME \
-                            -C "$command1 && $command2"
+                            -C "$command1 && $command2 && $command3"
                     '''
                 }
+            }
+        }
+        stage('Test Prod') {
+            environment {
+                PUBLIC_IP="35.182.227.13"
+            }
+            steps {
+                echo 'Deploying....'
+                sh 'curl -i http://${PUBLIC_IP}'
             }
         }
     }
