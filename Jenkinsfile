@@ -94,8 +94,8 @@ pipeline {
             }
             steps {
                 echo 'Deploying....'
-                sshagent(['ssh-key']) {
-                    sh '''
+                sshagent(credentials: ['ssh-key'], ignoreMissing: true) {
+                  sh '''
                         command="mkdir doc"
                         ssh ubuntu@${HOSTNAME} -C "$command"
                     '''
