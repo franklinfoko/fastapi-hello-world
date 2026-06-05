@@ -16,6 +16,7 @@ provider "aws" {
 resource "aws_instance" "example" {
   ami           = "ami-0eacb8127f9b58e90" # Ubuntu Server 26.04 LTS
   instance_type = "t3.medium"
+  key_name      = "keytest"
 
   tags = {
     Env = "Prod"
