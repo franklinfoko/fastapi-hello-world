@@ -115,7 +115,10 @@ pipeline {
             }
             steps {
                 echo 'Deploying....'
-                sh 'curl -i http://${PUBLIC_IP}'
+                sh '''
+                    sleep 5
+                    curl -i http://${PUBLIC_IP}
+                '''
             }
         }
     }
