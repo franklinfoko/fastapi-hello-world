@@ -71,6 +71,23 @@ pipeline {
                 }
             }
         }
+        stage('Create EC2') {
+            steps {
+                echo 'Creating EC2 instance using Terraform....'
+                withCredentials([aws(
+                    accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
+                    credentialsId: 'aws-credentials', 
+                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) 
+                    {
+                     sh '''
+                        cd infra
+                        terraform init
+                        terraform plan
+                        terraform apply --auto-approve
+                     '''
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
