@@ -97,7 +97,7 @@ pipeline {
                 sshagent(credentials: ['ssh-key'], ignoreMissing: true) {
                   sh '''
                         command="mkdir doc"
-                        ssh ubuntu@${HOSTNAME} -C "$command"
+                        ssh -o StrictHostKeyChecking=no ubuntu@${HOSTNAME} -C "$command"
                     '''
                 }
             }
