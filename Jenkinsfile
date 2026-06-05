@@ -58,10 +58,6 @@ pipeline {
         stage('Push Image on ECR') {
             steps {
                 echo 'Pushing..'
-                // docker.withRegistry(
-                //     "https://891377281461.dkr.ecr.ca-central-1.amazonaws.com", "ecr:ca-central-1:aws-credentials") {
-                //     docker.image(${IMAGE_NAME}:${IMAGE_TAG}).push()
-                // }
                 withCredentials([aws(
                     accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
                     credentialsId: 'aws-credentials', 
