@@ -34,7 +34,7 @@ pipeline {
                         sleep 5
                         CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$CONTAINER_NAME")
                         echo "$CONTAINER_IP"
-                        curl -I http://$CONTAINER_IP
+                        curl -i http://$CONTAINER_IP:8000
                         docker rm -f ${CONTAINER_NAME}
                         docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_HUB_ID}/${IMAGE_NAME}:${IMAGE_TAG}
                     '''
