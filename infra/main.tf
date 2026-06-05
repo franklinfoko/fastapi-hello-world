@@ -14,7 +14,7 @@ provider "aws" {
 
 
 resource "aws_instance" "example" {
-  ami           = "ami-06445ac85e0d277a9"
+  ami           = "ami-0eacb8127f9b58e90" # Ubuntu Server 26.04 LTS
   instance_type = "t3.medium"
 
   tags = {
